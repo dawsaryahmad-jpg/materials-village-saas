@@ -193,6 +193,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ==========================================================================
+    // 🚀 UPDATED BUNDLED WHATSAPP & AUTOMATION CHECKOUT ROUTINE
+    // ==========================================================================
     if (whatsappCheckoutBtn) {
         whatsappCheckoutBtn.addEventListener("click", () => {
             if (cart.length === 0) return;
@@ -208,7 +211,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
             messageText += `\n💰 *Total Invoice Balance:* ₦${billingTotal.toLocaleString()}\n\nRequesting automatic billing payment link settlement details...`;
             
-            window.location.href = "https://wa.me" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
+            // 🟢 STEP A: SHIP THE DATA BACKEND TO YOUR LIVE n8n SERVER
+            // We pass the raw cart array and total invoice as a clean JSON payload
+            fetch("http://http://localhost:5678/workflow/VblwDdo7JUcFSMNX", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    customer_phone: RESTAURANT_PHONE,
+                    invoice_total: billingTotal,
+                    items_ordered: cart
+                })
+            })
+            .then(response => console.log("n8n automation loop successfully captured data pipeline!"))
+            .catch(error => console.log("n8n transmission error:", error));
+
+            // 🟢 STEP B: NATIVELY REDIRECT THE CLIENT SECURELY TO THE WHATSAPP APP
+            const finalUrl = "https://wa.me" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
+            window.location.href = finalUrl; 
         });
     }
 });
