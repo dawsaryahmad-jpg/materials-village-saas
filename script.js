@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => console.log("n8n transmission error:", error));
 
             // 🟢 STEP B: NATIVELY REDIRECT THE CLIENT SECURELY TO THE WHATSAPP APP
-            const finalUrl = "https://wa.me" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
+            const finalUrl = "https://wa.me/" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
             window.location.href = finalUrl; 
         });
     }
