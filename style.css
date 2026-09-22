@@ -1,0 +1,583 @@
+/* ==========================================================================
+   1. TOKENS & RESET ARCHITECTURE
+   ========================================================================== */
+:root {
+    --primary-color: #8B0000;    /* Deep Crimson Accent */
+    --accent-color: #25D366;     /* Secure WhatsApp Green */
+    --dark-color: #111111;       /* Sleek Typography Slate */
+    --light-color: #F8F9FA;      /* Pure Minimal Section Mattes */
+    --white: #FFFFFF;
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--dark-color);
+    background-color: var(--white);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   2. STICKY INTERFACE HEADER & SEARCH MODULE
+   ========================================================================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background: var(--white);
+    border-bottom: 1px solid #EAEAEA;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--primary-color);
+}
+
+.search-wrapper input {
+    width: 280px;
+    padding: 12px 18px;
+    border-radius: 30px;
+    border: 1px solid #DCDCDC;
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-wrapper input:focus {
+    border-color: var(--primary-color);
+    width: 350px;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   3. TAB NAVIGATION WRAPPERS
+   ========================================================================== */
+.tab-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 25px 20px 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tab-btn {
+    background: var(--light-color);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555555;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   4. GRID CONTROLLERS & CARDS
+   ========================================================================== */
+.menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 5% 80px;
+}
+
+.menu-category {
+    margin-bottom: 45px;
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 12px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.food-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    border: 1px solid #EAEAEA;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.food-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 200px;
+    background: #F0F0F0;
+    overflow: hidden;
+}
+
+.food-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.food-card:hover .food-img {
+    transform: scale(1.04);
+}
+
+.food-info {
+    padding: 20px;
+}
+
+.food-info h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #666666;
+    margin-bottom: 18px;
+    min-height: 42px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.price small {
+    font-size: 0.75rem;
+    color: #888;
+    font-weight: 400;
+}
+
+.add-to-cart-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.add-to-cart-btn:hover {
+    background-color: #B22222;
+}
+
+/* ==========================================================================
+   5. INTERACTIVE BASKET INTERFACES
+   ========================================================================== */
+.floating-cart-icon {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(139,0,0,0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+    transition: var(--transition);
+}
+
+.floating-cart-icon:hover {
+    transform: scale(1.08);
+}
+
+#cart-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: var(--accent-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 10px;
+}
+
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 380px;
+    height: 100vh;
+    background-color: var(--white);
+    box-shadow: -6px 0 24px rgba(0,0,0,0.1);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-drawer.open {
+    right: 0;
+}
+
+.cart-header {
+    padding: 20px;
+    border-bottom: 1px solid #EEE;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-cart-btn {
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.cart-items-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.empty-cart-msg {
+    text-align: center;
+    color: #999;
+    margin-top: 50px;
+    font-size: 0.9rem;
+}
+
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+.cart-item-details h4 {
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.cart-item-details span {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #CC0000;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.cart-footer {
+    padding: 20px;
+    background-color: var(--light-color);
+    border-top: 1px solid #EAEAEA;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.checkout-btn {
+    width: 100%;
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.checkout-btn:disabled {
+    background-color: #CCC;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 650px) {
+    header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px 20px;
+    }
+    .search-wrapper input {
+        width: 100%;
+        max-width: 320px;
+    }
+    .search-wrapper input:focus {
+        width: 100%;
+        max-width: 340px;
+    }
+    .cart-drawer {
+        width: 100vw;
+        right: -100vw;
+    }
+}
+footer {
+    text-align: center;
+    padding: 30px;
+    border-top: 1px solid #EEE;
+    font-size: 0.9rem;
+}
+/* ==========================================================================
+   7. HOME DIRECTORY COLLECTION BLOCKS
+   ========================================================================== */
+.home-collections {
+    padding: 60px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 1.05rem;
+}
+
+.collection-directory {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.collection-card {
+    position: relative;
+    border-radius: var(--border-radius);
+    padding: 40px 30px;
+    text-align: left;
+    color: var(--white);
+    overflow: hidden;
+    min-height: 240px;
+    display: flex;
+    align-items: flex-end;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.collection-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.card-bg-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.92;
+    z-index: 1;
+    transition: var(--transition);
+}
+
+.collection-card:hover .card-bg-mask {
+    opacity: 0.85;
+}
+
+.collection-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.collection-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.collection-content p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    min-height: 60px;
+}
+
+.explore-link {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px;
+    transition: var(--transition);
+}
+
+.collection-card:hover .explore-link {
+    border-bottom-color: var(--white);
+    padding-left: 5px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    margin-left: 20px;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+header nav a.active, header nav a:hover {
+    color: var(--primary-color);
+}
+/* ==========================================================================
+   EXPLICIT HERO SECTIONS & CALL-TO-ACTION BUTTON STYLES
+   ========================================================================== */
+.hero {
+    background:
+                url('images/bg-hero.jfif') center/cover no-repeat;
+    color: var(--white);
+    text-align: center;
+    padding: 100px 24px;
+    border-bottom: 4px solid var(--primary-color);
+}
+
+.hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    margin-bottom: 18px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.hero .whatsapp-color {
+    color: var(--accent-color);
+}
+
+.hero p {
+    font-size: 1.15rem;
+    max-width: 750px;
+    margin: 0 auto 35px;
+    opacity: 0.88;
+    line-height: 1.6;
+}
+
+/* Base style mapping for your main action buttons */
+.cta-btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 14px 32px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(139, 0, 0, 0.3);
+}
+
+.cta-btn:hover {
+    background-color: #B22222;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+}
+
+/* Custom alignment for collection card links to match template metrics */
+.food-card .add-to-cart-btn {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+/* ==========================================================================
+   8. SEARCH FALLBACK EMPTY STATE DESIGN CARD
+   ========================================================================== */
+.search-fallback-card {
+    background-color: var(--light-color);
+    border: 1px dashed #CCCCCC;
+    border-radius: var(--border-radius);
+    padding: 50px 30px;
+    text-align: center;
+    max-width: 550px;
+    margin: 40px auto;
+}
+
+.fallback-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    opacity: 0.6;
+}
+
+.search-fallback-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+.search-fallback-card p {
+    font-size: 0.95rem;
+    color: #666666;
+    line-height: 1.5;
+    max-width: 420px;
+    margin: 0 auto;
+}
