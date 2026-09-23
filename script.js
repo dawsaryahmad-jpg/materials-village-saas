@@ -1,13 +1,13 @@
 // ==========================================================================
 // 1. GLOBAL SYSTEM CONFIGURATIONS
 // ==========================================================================
-const RESTAURANT_PHONE = "2347081485609"; // Ahmad's target WhatsApp number
+const RESTAURANT_PHONE = "2347081485609"; // Ahmad's target WhatsApp business routing gate
 let cart = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Script loaded securely. Initializing multi-page layout engine...");
+    console.log("TexFlow Core Engine Online. Initializing high-speed catalog systems...");
 
-    // DOM Element Selections
+    // DOM Binds
     const searchInput = document.getElementById("catalog-search");
     const tabBtns = document.querySelectorAll(".tab-btn");
     const menuCategories = document.querySelectorAll(".menu-category");
@@ -25,13 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetCatalogBtn = document.getElementById("reset-catalog-btn");
 
     // ==========================================================================
-    // 🔍 CONDITIONAL CATALOG SEARCH & FILTER MODULE (Only runs on catalog.html)
+    // 🔍 INTEGRATED DUAL-FILTER ENGINE (Only fires on catalog page)
     // ==========================================================================
     if (searchInput && menuCategories.length > 0) {
         let activeCategory = "all";
         let searchQuery = "";
 
-        // Read incoming homepage category variables (?category=laces)
         const urlParams = new URLSearchParams(window.location.search);
         const routedCategory = urlParams.get("category");
 
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
 
-                // Toggle visibility of the category section banner header
                 if (visibleCardsInSectionCount > 0) {
                     categorySection.style.display = "block";
                 } else {
@@ -77,23 +75,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // Toggle empty search fallback UI card view
             if (searchFallback) {
-                if (absoluteTotalVisible === 0) {
-                    searchFallback.style.display = "block";
-                } else {
-                    searchFallback.style.display = "none";
-                }
+                searchFallback.style.display = (absoluteTotalVisible === 0) ? "block" : "none";
             }
         }
 
-        // Keystroke listeners
         searchInput.addEventListener("keyup", (e) => {
             searchQuery = e.target.value.toLowerCase().trim();
             filterCatalog();
         });
 
-        // Tab selection click listeners
         tabBtns.forEach(btn => {
             btn.addEventListener("click", (e) => {
                 tabBtns.forEach(b => b.classList.remove("active"));
@@ -103,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Empty state reset button click listener
         if (resetCatalogBtn) {
             resetCatalogBtn.addEventListener("click", () => {
                 searchInput.value = "";
@@ -117,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 🛒 SAFE SHOPPING BASKET DRAWER ENGINE (Only executes if elements exist)
+    // 🛒 FRACTIONAL DATA BIND SHOPPING CART ENGINE
     // ==========================================================================
     if (cartToggleBadge && cartDrawer && closeCartBtn) {
         cartToggleBadge.addEventListener("click", () => cartDrawer.classList.add("open"));
@@ -128,16 +118,24 @@ document.addEventListener("DOMContentLoaded", () => {
         productCards.forEach(card => {
             const addBtn = card.querySelector(".add-to-cart-btn");
             const name = card.getAttribute("data-name");
-            const price = parseInt(card.getAttribute("data-price"), 10);
+            const price = parseFloat(card.getAttribute("data-price"));
 
-            // Ensure we are on the catalog page with an actual buy button before passing listeners
             if (addBtn && addBtn.tagName === "BUTTON") {
                 addBtn.addEventListener("click", () => {
+                    // Prompt to request fine decimal entries seamlessly
+                    let requestedYards = prompt(`Enter quantity/yards for ${name} (e.g., 1.5, 3, 4.25):`, "1");
+                    let yards = parseFloat(requestedYards);
+
+                    if (isNaN(yards) || yards <= 0) {
+                        alert("Invalid quantity entry. Please input a metric greater than 0.");
+                        return;
+                    }
+
                     const existing = cart.find(item => item.name === name);
                     if (existing) {
-                        existing.quantity += 1;
+                        existing.quantity += yards;
                     } else {
-                        cart.push({ name, price, quantity: 1 });
+                        cart.push({ name, price, quantity: yards });
                     }
                     renderCart();
                 });
@@ -150,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cartItemsContainer.innerHTML = "";
         
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Your basket is empty. Select fabrics to build your manifest.</p>';
+            cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Your materials basket is empty.</p>';
             if (cartTotalPriceEl) cartTotalPriceEl.innerText = "₦0";
             if (cartCountBadge) cartCountBadge.innerText = "0";
             if (whatsappCheckoutBtn) whatsappCheckoutBtn.disabled = true;
@@ -158,19 +156,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         let grandTotal = 0;
-        let unitCount = 0;
+        let totalUnitsCount = 0;
 
         cart.forEach(item => {
             const subtotal = item.price * item.quantity;
             grandTotal += subtotal;
-            unitCount += item.quantity;
+            totalUnitsCount += item.quantity;
 
             const row = document.createElement("div");
             row.className = "cart-item-row";
+            // 🟢 Render decimals beautifully up to two fractions using toFixed()
             row.innerHTML = `
                 <div class="cart-item-details">
                     <h4>${item.name}</h4>
-                    <span>${item.quantity}x @ ₦${item.price.toLocaleString()}</span>
+                    <span>${item.quantity.toFixed(1)} yards @ ₦${item.price.toLocaleString()}</span>
                 </div>
                 <div style="display:flex; align-items:center;">
                     <span style="font-weight:600; margin-right:12px;">₦${subtotal.toLocaleString()}</span>
@@ -181,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (cartTotalPriceEl) cartTotalPriceEl.innerText = `₦${grandTotal.toLocaleString()}`;
-        if (cartCountBadge) cartCountBadge.innerText = unitCount;
+        if (cartCountBadge) cartCountBadge.innerText = totalUnitsCount.toFixed(1); // Fractional count support
         if (whatsappCheckoutBtn) whatsappCheckoutBtn.disabled = false;
 
         cartItemsContainer.querySelectorAll(".remove-btn").forEach(btn => {
@@ -193,9 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ==========================================================================
-    // 🚀 UPDATED BUNDLED WHATSAPP & AUTOMATION CHECKOUT ROUTINE
-    // ==========================================================================
     if (whatsappCheckoutBtn) {
         whatsappCheckoutBtn.addEventListener("click", () => {
             if (cart.length === 0) return;
@@ -206,30 +202,30 @@ document.addEventListener("DOMContentLoaded", () => {
             cart.forEach((item, index) => {
                 const itemSub = item.price * item.quantity;
                 billingTotal += itemSub;
-                messageText += `${index + 1}. *${item.name}* (${item.quantity} yards) - ₦${itemSub.toLocaleString()}\n`;
+                messageText += `${index + 1}. *${item.name}* (${item.quantity.toFixed(1)} yards) - ₦${itemSub.toLocaleString()}\n`;
             });
 
-            messageText += `\n💰 *Total Invoice Balance:* ₦${billingTotal.toLocaleString()}\n\nRequesting automatic billing payment link settlement details...`;
-            
-            // 🟢 STEP A: SHIP THE DATA BACKEND TO YOUR LIVE n8n SERVER
-            // We pass the raw cart array and total invoice as a clean JSON payload
-            fetch("http://http://localhost:5678/workflow/VblwDdo7JUcFSMNX", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    customer_phone: RESTAURANT_PHONE,
-                    invoice_total: billingTotal,
-                    items_ordered: cart
-                })
-            })
-            .then(response => console.log("n8n automation loop successfully captured data pipeline!"))
-            .catch(error => console.log("n8n transmission error:", error));
-
-            // 🟢 STEP B: NATIVELY REDIRECT THE CLIENT SECURELY TO THE WHATSAPP APP
-            const finalUrl = "https://wa.me/" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
-            window.location.href = finalUrl; 
+            messageText += `\n💰 *Total Invoice Balance:* ₦${billingTotal.toLocaleString()}\n\nRequesting account routing transaction coordinates...`;
+            window.location.href = "https://wa.me" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
         });
     }
-});
+
+    // ==========================================================================
+    // 🚀 SCROLL FLUIDITY VISUAL ANIMATION ENGINE 
+    // ==========================================================================
+    const animateElements = document.querySelectorAll('.food-card, .menu-category, section > div');
+    
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible'); // Trigger elegant hardware scroll float up
+                scrollObserver.unobserve(entry.target); // Save memory processing footprint
+            }
+        });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+
+    animateElements.forEach(el => {
+    el.classList.add('scroll-reveal'); // Inject initial hidden styling parametersscrollObserver.observe(el) 
+
+        ;});
+    });
