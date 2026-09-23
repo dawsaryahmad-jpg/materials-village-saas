@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             messageText += `\n💰 *Total Invoice Balance:* ₦${billingTotal.toLocaleString()}\n\nRequesting automatic billing payment link settlement details...`;
-            window.location.href = "https://wa.me/" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
+           window.location.href = "https://wa.me/" + RESTAURANT_PHONE + "/?text=" + encodeURIComponent(messageText);
         });
     }
 
