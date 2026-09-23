@@ -1,13 +1,7 @@
-// ==========================================================================
-// 1. GLOBAL SYSTEM CONFIGURATIONS
-// ==========================================================================
-const RESTAURANT_PHONE = "2347081485609"; // Ahmad's target WhatsApp business routing gate
+const RESTAURANT_PHONE = "2347081485609";
 let cart = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("TexFlow Core Engine Online. Initializing high-speed catalog systems...");
-
-    // DOM Binds
     const searchInput = document.getElementById("catalog-search");
     const tabBtns = document.querySelectorAll(".tab-btn");
     const menuCategories = document.querySelectorAll(".menu-category");
@@ -24,9 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchFallback = document.getElementById("search-fallback");
     const resetCatalogBtn = document.getElementById("reset-catalog-btn");
 
-    // ==========================================================================
-    // 🔍 INTEGRATED DUAL-FILTER ENGINE (Only fires on catalog page)
-    // ==========================================================================
     if (searchInput && menuCategories.length > 0) {
         let activeCategory = "all";
         let searchQuery = "";
@@ -68,11 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
 
-                if (visibleCardsInSectionCount > 0) {
-                    categorySection.style.display = "block";
-                } else {
-                    categorySection.style.display = "none";
-                }
+                categorySection.style.display = visibleCardsInSectionCount > 0 ? "block" : "none";
             });
 
             if (searchFallback) {
@@ -100,38 +87,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 searchQuery = "";
                 activeCategory = "all";
                 tabBtns.forEach(b => b.classList.remove("active"));
-                if (tabBtns[0]) tabBtns[0].classList.add("active");
+                if (tabBtns.length > 0) tabBtns[0].classList.add("active");
                 filterCatalog();
             });
         }
     }
 
-    // ==========================================================================
-    // 🛒 FRACTIONAL DATA BIND SHOPPING CART ENGINE
-    // ==========================================================================
     if (cartToggleBadge && cartDrawer && closeCartBtn) {
         cartToggleBadge.addEventListener("click", () => cartDrawer.classList.add("open"));
         closeCartBtn.addEventListener("click", () => cartDrawer.classList.remove("open"));
     }
-});
 
     if (productCards.length > 0) {
         productCards.forEach(card => {
+            const minusBtn = card.querySelector(".minus-btn");
+            const plusBtn = card.querySelector(".plus-btn");
+            const qtyInput = card.querySelector(".quantity-input");
             const addBtn = card.querySelector(".add-to-cart-btn");
+            
             const name = card.getAttribute("data-name");
             const price = parseFloat(card.getAttribute("data-price"));
 
-            if (addBtn && addBtn.tagName === "BUTTON") {
-                addBtn.addEventListener("click", () => {
-                    // Prompt to request fine decimal entries seamlessly
-                    let requestedYards = prompt(`Enter quantity/yards for ${name} (e.g., 1.5, 3, 4.25):`, "1");
-                    let yards = parseFloat(requestedYards);
+            if (plusBtn && qtyInput) {
+                plusBtn.addEventListener("click", () => {
+                    let currentVal = parseFloat(qtyInput.value);
+                    qtyInput.value = (currentVal + 0.5).toFixed(1);
+                });
+            }
 
-                    if (isNaN(yards) || yards <= 0) {
-                        alert("Invalid quantity entry. Please input a metric greater than 0.");
-                        return;
+            if (minusBtn && qtyInput) {
+                minusBtn.addEventListener("click", () => {
+                    let currentVal = parseFloat(qtyInput.value);
+                    if (currentVal > 0.5) {
+                        qtyInput.value = (currentVal - 0.5).toFixed(1);
                     }
+                });
+            }
 
+            if (addBtn && qtyInput) {
+                addBtn.addEventListener("click", () => {
+                    let yards = parseFloat(qtyInput.value);
                     const existing = cart.find(item => item.name === name);
                     if (existing) {
                         existing.quantity += yards;
@@ -139,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         cart.push({ name, price, quantity: yards });
                     }
                     renderCart();
+                    qtyInput.value = "1.0";
                 });
             }
         });
@@ -149,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cartItemsContainer.innerHTML = "";
         
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Your materials basket is empty.</p>';
+            cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Your basket is empty. Select fabrics to build your manifest.</p>';
             if (cartTotalPriceEl) cartTotalPriceEl.innerText = "₦0";
             if (cartCountBadge) cartCountBadge.innerText = "0";
             if (whatsappCheckoutBtn) whatsappCheckoutBtn.disabled = true;
@@ -166,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const row = document.createElement("div");
             row.className = "cart-item-row";
-            // 🟢 Render decimals beautifully up to two fractions using toFixed()
             row.innerHTML = `
                 <div class="cart-item-details">
                     <h4>${item.name}</h4>
@@ -181,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (cartTotalPriceEl) cartTotalPriceEl.innerText = `₦${grandTotal.toLocaleString()}`;
-        if (cartCountBadge) cartCountBadge.innerText = totalUnitsCount.toFixed(1); // Fractional count support
+        if (cartCountBadge) cartCountBadge.innerText = totalUnitsCount.toFixed(1);
         if (whatsappCheckoutBtn) whatsappCheckoutBtn.disabled = false;
 
         cartItemsContainer.querySelectorAll(".remove-btn").forEach(btn => {
@@ -206,41 +201,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 messageText += `${index + 1}. *${item.name}* (${item.quantity.toFixed(1)} yards) - ₦${itemSub.toLocaleString()}\n`;
             });
 
-            messageText += `\n💰 *Total Invoice Balance:* ₦${billingTotal.toLocaleString()}\n\nRequesting account routing transaction coordinates...`;
+            messageText += `\n💰 *Total Invoice Balance:* ₦${billingTotal.toLocaleString()}\n\nRequesting automatic billing payment link settlement details...`;
             window.location.href = "https://wa.me" + RESTAURANT_PHONE + "?text=" + encodeURIComponent(messageText);
         });
     }
 
-        // ==========================================================================
-    // 🚀 FOOLPROOF SCROLL FLUIDITY VISUAL ANIMATION ENGINE 
-    // ==========================================================================
     const animateElements = document.querySelectorAll('.food-card, .menu-category');
-    
     if (animateElements.length > 0) {
-        // Prepare elements with the base hidden state
         animateElements.forEach(el => el.classList.add('scroll-reveal'));
-
-        // High-compatibility Intersection Observer configuration
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible'); // Trigger hardware float up
-                    scrollObserver.unobserve(entry.target); // Free memory footprint
+                    entry.target.classList.add('visible');
+                    scrollObserver.unobserve(entry.target);
                 }
             });
-        }, { 
-            threshold: 0.01,        /* Trigger as soon as even 1% of the card peeks onto the screen */
-            rootMargin: "0px 0px 50px 0px" /* Pre-loads the animation slightly before it scrolls into view */
-        });
+        }, { threshold: 0.01, rootMargin: "0px 0px 40px 0px" });
 
         animateElements.forEach(el => scrollObserver.observe(el));
-
-        // 🟢 FAIL-SAFE: If the user has animations turned off or browser lags, show them instantly
         setTimeout(() => {
             animateElements.forEach(el => {
-                if (!el.classList.contains('visible')) {
-                    el.classList.add('visible');
-                }
+                if (!el.classList.contains('visible')) el.classList.add('visible');
             });
         }, 800);
     }
+});

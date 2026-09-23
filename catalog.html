@@ -1,24 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="images/favicon.jfif">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalog Matrix | Materials Village
-        <!-- Open Graph Protocol Meta Tags for Link Previews -->
-<meta property="og:title" content="Materials Village | Premium Textiles B2B Platform">
-<meta property="og:description" content="Browse premium fabrics, build custom order manifests, and route your textile orders straight to our sales counter via WhatsApp with zero signup friction.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://github.io">
-<meta property="og:image" content="https://github.ioimages/og-preview.jfif">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-    </title>
+    <title>Catalog Matrix | Materials Village</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
 
-    <!-- Internal Page Header with Dynamic Filter Input -->
+    <!-- Header Navigation Interface -->
     <header>
         <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">Materials<span>Village</span></a></div>
         <div class="search-wrapper">
@@ -26,7 +17,7 @@
         </div>
     </header>
 
-    <!-- Collection Filter Tabs -->
+    <!-- Collection Navigation Filter Tabs -->
     <div class="tab-container">
         <button class="tab-btn active" data-category="all">✨ All Collections</button>
         <button class="tab-btn" data-category="laces">🧵 Luxury Laces</button>
@@ -34,35 +25,62 @@
         <button class="tab-btn" data-category="natives">👑 Traditional Natives</button>
     </div>
 
-    <!-- Inventory Container -->
+    <!-- Main Inventory Container -->
     <main class="menu-container">
- <!-- 🚨 ADD THIS HIDDEN SEARCH FAULT WARNING BLOCK HERE -->
+
+        <!-- SEARCH FALLBACK EMPTY STATE CARD -->
         <div id="search-fallback" class="search-fallback-card" style="display: none;">
             <div class="fallback-icon">🔍</div>
             <h3>Material Not Found</h3>
-            <p>We couldn't find any fabrics matching that keyword. Try checking your spelling or explore another collection.</p>
+            <p>We couldn't find any fabrics matching that keyword. Try checking your spelling or explore another collection category.</p>
             <button id="reset-catalog-btn" class="cta-btn" style="margin-top: 15px; padding: 10px 22px; font-size: 0.85rem;">Clear Search & View All</button>
         </div>
+
         <!-- COLLECTION BLOCK A: LACES -->
         <section class="menu-category" data-section-category="laces">
             <h2 class="category-title">🧵 Luxury Laces Collection</h2>
             <div class="menu-grid">
+                
                 <div class="food-card" data-name="Korean Royal Crepe Velvet" data-price="4500" data-category="laces">
-                    <div class="image-wrapper"><img src="images/velvet.jfif"  loading="lazy"alt="Velvet" class="food-img"></div>
+                    <div class="image-wrapper"><img src="images/velvet.jfif" alt="Velvet" class="food-img" loading="lazy"></div>
                     <div class="food-info">
                         <h3>Korean Royal Crepe Velvet</h3>
-                        <p class="description">Breathable, high-grade fluid drape optimal for luxurious ceremonial dresses.</p>
-                        <div class="price-row"><span class="price">₦4,500 <small>/ yard</small></span><button class="add-to-cart-btn">Add to Basket</button></div>
+                        <p class="description">Breathable, high-grade fluid drape optimal for luxurious ceremonial modest dresses.</p>
+                        
+                        <div class="quantity-control-wrapper">
+                            <button class="step-btn minus-btn">&minus;</button>
+                            <input type="number" class="quantity-input" value="1.0" step="0.5" min="0.5" readonly>
+                            <span class="unit-label">yards</span>
+                            <button class="step-btn plus-btn">+</button>
+                        </div>
+
+                        <div class="price-row">
+                            <span class="price">₦4,500 <small>/ yard</small></span>
+                            <button class="add-to-cart-btn">Add to Basket</button>
+                        </div>
                     </div>
                 </div>
+
                 <div class="food-card" data-name="French Embroidered Voile Lace" data-price="15000" data-category="laces">
-                    <div class="image-wrapper"><img src="images/lace.jfif" loading="lazy" alt="French Lace" class="food-img"></div>
+                    <div class="image-wrapper"><img src="images/lace.jfif" alt="French Lace" class="food-img" loading="lazy"></div>
                     <div class="food-info">
                         <h3>French Embroidered Voile Lace</h3>
                         <p class="description">Premium intricate floral sequence mesh designed for high-end bridal statement gowns.</p>
-                        <div class="price-row"><span class="price">₦15,000 <small>/ yard</small></span><button class="add-to-cart-btn">Add to Basket</button></div>
+                        
+                        <div class="quantity-control-wrapper">
+                            <button class="step-btn minus-btn">&minus;</button>
+                            <input type="number" class="quantity-input" value="1.0" step="0.5" min="0.5" readonly>
+                            <span class="unit-label">yards</span>
+                            <button class="step-btn plus-btn">+</button>
+                        </div>
+
+                        <div class="price-row">
+                            <span class="price">₦15,000 <small>/ yard</small></span>
+                            <button class="add-to-cart-btn">Add to Basket</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -70,22 +88,47 @@
         <section class="menu-category" data-section-category="suitings">
             <h2 class="category-title">👔 Premium Corporate Suitings</h2>
             <div class="menu-grid">
+
                 <div class="food-card" data-name="Super 140s Italian Cashmere" data-price="7500" data-category="suitings">
-                    <div class="image-wrapper"><img src="images/cahsmere.jfif" loading="lazy" alt="Cashmere" class="food-img"></div>
+                    <div class="image-wrapper"><img src="images/cahsmere.jfif" alt="Cashmere" class="food-img" loading="lazy"></div>
                     <div class="food-info">
                         <h3>Super 140s Italian Cashmere</h3>
                         <p class="description">Smooth, heavyweight wool blend matrix tailored for sharp corporate senator fits.</p>
-                        <div class="price-row"><span class="price">₦7,500 <small>/ yard</small></span><button class="add-to-cart-btn">Add to Basket</button></div>
+                        
+                        <div class="quantity-control-wrapper">
+                            <button class="step-btn minus-btn">&minus;</button>
+                            <input type="number" class="quantity-input" value="1.0" step="0.5" min="0.5" readonly>
+                            <span class="unit-label">yards</span>
+                            <button class="step-btn plus-btn">+</button>
+                        </div>
+
+                        <div class="price-row">
+                            <span class="price">₦7,500 <small>/ yard</small></span>
+                            <button class="add-to-cart-btn">Add to Basket</button>
+                        </div>
                     </div>
                 </div>
+
                 <div class="food-card" data-name="English Houndstooth Tweed" data-price="9000" data-category="suitings">
-                    <div class="image-wrapper"><img src="images/tweed.jfif" loading="lazy" alt="Tweed" class="food-img"></div>
+                    <div class="image-wrapper"><img src="images/tweed.jfif" alt="Tweed" class="food-img" loading="lazy"></div>
                     <div class="food-info">
                         <h3>English Houndstooth Tweed</h3>
                         <p class="description">Classic textured monochrome weaving for bespoke structural blazers and corporate apparel.</p>
-                        <div class="price-row"><span class="price">₦9,000 <small>/ yard</small></span><button class="add-to-cart-btn">Add to Basket</button></div>
+                        
+                        <div class="quantity-control-wrapper">
+                            <button class="step-btn minus-btn">&minus;</button>
+                            <input type="number" class="quantity-input" value="1.0" step="0.5" min="0.5" readonly>
+                            <span class="unit-label">yards</span>
+                            <button class="step-btn plus-btn">+</button>
+                        </div>
+
+                        <div class="price-row">
+                            <span class="price">₦9,000 <small>/ yard</small></span>
+                            <button class="add-to-cart-btn">Add to Basket</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -93,27 +136,50 @@
         <section class="menu-category" data-section-category="natives">
             <h2 class="category-title">👑 Traditional Native Attire</h2>
             <div class="menu-grid">
+
                 <div class="food-card" data-name="Handwoven Metallic Aso Oke" data-price="12000" data-category="natives">
-                    <div class="image-wrapper"><img src="images/Aso-oke.jfif" loading="lazy" alt="Aso Oke" class="food-img"></div>
+                    <div class="image-wrapper"><img src="images/Aso-oke.jfif" alt="Aso Oke" class="food-img" loading="lazy"></div>
                     <div class="food-info">
                         <h3>Handwoven Metallic Aso Oke</h3>
                         <p class="description">Traditional intricate embroidery strip woven with stunning silver and gold threading.</p>
-                        <div class="price-row"><span class="price">₦12,000 <small>/ bundle</small></span><button class="add-to-cart-btn">Add to Basket</button></div>
+                        
+                        <div class="quantity-control-wrapper">
+                            <button class="step-btn minus-btn">&minus;</button>
+                            <input type="number" class="quantity-input" value="1.0" step="0.5" min="0.5" readonly>
+                            <span class="unit-label">yards</span>
+                            <button class="step-btn plus-btn">+</button>
+                        </div>
+
+                        <div class="price-row">
+                            <span class="price">₦12,000 <small>/ bundle</small></span>
+                            <button class="add-to-cart-btn">Add to Basket</button>
+                        </div>
                     </div>
                 </div>
+
                 <div class="food-card" data-name="Premium Silk Brocade Shadda" data-price="8500" data-category="natives">
-                    <div class="image-wrapper"><img src="images/brocade.jfif" loading="lazy" alt="Brocade" class="food-img"></div>
+                    <div class="image-wrapper"><img src="images/brocade.jfif" alt="Brocade" class="food-img" loading="lazy"></div>
                     <div class="food-info">
                         <h3>Premium Silk Brocade Shadda</h3>
                         <p class="description">High-luster, stiff jacquard guinea brocade with rich raised patterns.</p>
-                        <div class="price-row"><span class="price">₦8,500 <small>/ yard</small></span><button class="add-to-cart-btn">Add to Basket</button></div>
+                        
+                        <div class="quantity-control-wrapper">
+                            <button class="step-btn minus-btn">&minus;</button>
+                            <input type="number" class="quantity-input" value="1.0" step="0.5" min="0.5" readonly>
+                            <span class="unit-label">yards</span>
+                            <button class="step-btn plus-btn">+</button>
+                        </div>
+
+                        <div class="price-row">
+                            <span class="price">₦8,500 <small>/ yard</small></span>
+                            <button class="add-to-cart-btn">Add to Basket</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
-
-    </main>
-
+        </main>
     <!-- Basket Module Slider Drawer -->
     <div id="cart-drawer" class="cart-drawer">
         <div class="cart-header">

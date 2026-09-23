@@ -581,3 +581,67 @@ header nav a.active, header nav a:hover {
     max-width: 420px;
     margin: 0 auto;
 }
+
+/* ==========================================================================
+   MODERN COMPACT QUANTITY CONTROLLER (SEPARATE FROM BUTTON TARGETS)
+   ========================================================================== */
+.quantity-control-wrapper {
+    display: inline-flex;
+    align-items: center;
+    background: #EBF2F0; /* Soft tint of luxury emerald */
+    border: 1px solid #D1E0DB;
+    border-radius: 20px; /* Fully rounded capsule */
+    padding: 4px 8px;
+    margin-bottom: 20px; /* Enforces spacing isolation from checkout row */
+    gap: 6px;
+}
+
+.step-btn {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%; /* Perfect circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.step-btn:hover {
+    background-color: #17634D;
+    transform: scale(1.05);
+}
+
+.quantity-input {
+    width: 42px;
+    text-align: center;
+    border: none;
+    background: none;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--dark-color);
+    outline: none;
+}
+
+.unit-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4D665E;
+    margin-left: -2px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Adds strict clearance to avoid accidental double clicks on phone viewports */
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #F0F4F2;
+    padding-top: 14px;
+}
