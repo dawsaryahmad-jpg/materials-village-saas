@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cartToggleBadge.addEventListener("click", () => cartDrawer.classList.add("open"));
         closeCartBtn.addEventListener("click", () => cartDrawer.classList.remove("open"));
     }
+});
 
     if (productCards.length > 0) {
         productCards.forEach(card => {
@@ -210,22 +211,36 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+        // ==========================================================================
+    // 🚀 FOOLPROOF SCROLL FLUIDITY VISUAL ANIMATION ENGINE 
     // ==========================================================================
-    // 🚀 SCROLL FLUIDITY VISUAL ANIMATION ENGINE 
-    // ==========================================================================
-    const animateElements = document.querySelectorAll('.food-card, .menu-category, section > div');
+    const animateElements = document.querySelectorAll('.food-card, .menu-category');
     
-    const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible'); // Trigger elegant hardware scroll float up
-                scrollObserver.unobserve(entry.target); // Save memory processing footprint
-            }
+    if (animateElements.length > 0) {
+        // Prepare elements with the base hidden state
+        animateElements.forEach(el => el.classList.add('scroll-reveal'));
+
+        // High-compatibility Intersection Observer configuration
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible'); // Trigger hardware float up
+                    scrollObserver.unobserve(entry.target); // Free memory footprint
+                }
+            });
+        }, { 
+            threshold: 0.01,        /* Trigger as soon as even 1% of the card peeks onto the screen */
+            rootMargin: "0px 0px 50px 0px" /* Pre-loads the animation slightly before it scrolls into view */
         });
-    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
 
-    animateElements.forEach(el => {
-    el.classList.add('scroll-reveal'); // Inject initial hidden styling parametersscrollObserver.observe(el) 
+        animateElements.forEach(el => scrollObserver.observe(el));
 
-        ;});
-    });
+        // 🟢 FAIL-SAFE: If the user has animations turned off or browser lags, show them instantly
+        setTimeout(() => {
+            animateElements.forEach(el => {
+                if (!el.classList.contains('visible')) {
+                    el.classList.add('visible');
+                }
+            });
+        }, 800);
+    }
